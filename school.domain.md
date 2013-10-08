@@ -105,8 +105,6 @@ describe School do
       @school.add_student("Blake Johnson", 7)
       @school.add_student("Jack Bauer", 7)
 
-      binding.pry
-
       @school.sort.should eq({7 => ["Blake Johnson", "Jack Bauer"], 9 => ["Bart Simpson", "Homer Simpson"], 10 => ["Avi Flombaum", "Jeff Baird"]})
     end
   end
