@@ -46,8 +46,6 @@ school.sort
 ```
 Here's a test suite to help you validate.
 
-*Install the fis-test gem*
-
 ```ruby
 require 'rspec'
 
