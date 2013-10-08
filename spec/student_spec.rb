@@ -32,6 +32,8 @@ describe "Student" do
   describe "::all" do
 
     it "keeps track of the students that have been created" do
+      Student.reset_all
+
       ('a'..'c').each do |l|
         s = Student.new
         s.name = l
@@ -76,12 +78,19 @@ describe "Student" do
 
     let(:student) { Student.new }
 
+    before(:each) do
+      Student.reset_all
+    end
+
     it "has an ID" do
       student.should respond_to(:id)
     end
 
+    it "doesn't allow ID to be changed" do
+      student.should_not respond_to(:id=)
+    end
+
     it "auto-assigns an id" do
-      Student.reset_all
       student.name = "Becky"
       student.id.should eq(1)
 
