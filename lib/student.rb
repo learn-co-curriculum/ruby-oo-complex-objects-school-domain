@@ -11,6 +11,7 @@ class Student
       @id = @@students.max_by { |s| s.id }.id + 1
     end
     @@students << self
+    @saved = false
   end
 
   def self.reset_all
