@@ -122,4 +122,48 @@ describe "Student" do
 
     end
   end
+
+  context "database operations" do
+    before(:each) do
+      @student = Student.new.tap { |s| s.name = "Anything But Scott Oh Nevermind" }
+    end
+
+    #think about what you need to do to set up a database
+    #and what should have the responsibility for doing that for these tests
+
+    describe ".insert" do
+      it "persists the student to the database" do
+        @student.should respond_to(:insert)
+        @student.insert.should eq(true)
+      end
+    end
+
+    describe ".update" do
+      it "updates the student in the database" do
+        @student.insert
+        @student.name = "Catherine"
+        @student.update.should eq(true)
+      end
+    end
+
+    #bonus 1:  prove it!
+    describe "::load_from_database" do
+      it "loads the student from the database" do
+        @student.insert
+        loaded = Student.load(@student.id)
+        loaded.name.should eq(@student.name)
+        loaded.id.should eq(@student.id)
+        @student.name = "new name"
+        @student.update
+        updated = Student.load(@student.id)
+        updated.name.should eq(@student.name)
+      end
+    end
+
+    #bonus 2: use before(:each) and after(:each) to create your database
+    #and set it to a default state for each test
+
+    #bonus 3: extract the code you used in bonus 2 to a
+    #new class that the test can reference to create and destroy databases
+  end
 end
