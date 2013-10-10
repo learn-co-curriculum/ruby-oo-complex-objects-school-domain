@@ -1,4 +1,5 @@
 require 'sqlite3'
+require 'pry'
 
 class Student
   ATTRIBUTES = {
@@ -40,6 +41,17 @@ class Student
       self.students_from_rows(results)
     end
   end 
+
+  # def self.method_missing(method_name, *args, &block)
+  #   match = method_name.to_s.match(/(find_by_)(.+)/)
+  #   if match[1] == "find_by_"
+  #     column = match[2]
+  #     row = @@db.execute("SELECT * FROM students WHERE #{column} = ? LIMIT 1", args).flatten
+  #     Student.new_with_row(row)
+  #   else
+  #     super
+  #   end
+  # end
 
   def self.table_name
     "#{self.to_s.downcase}s"
