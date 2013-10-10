@@ -4,12 +4,9 @@ require 'sqlite3'
 describe Student do
   context "database operations" do
     before(:each) do
+      Student.reset_all
       @student = Student.new.tap { |s| s.name = "Anything But Scott Oh Nevermind" }
       # @db = DBBuddy.create
-    end
-
-    after(:each) do
-      Student.reset_all
     end
 
     #think about what you need to do to set up a database
@@ -56,14 +53,6 @@ describe Student do
         updated.name.should eq(@student.name)
       end
 
-      it "finds by id" do
-        @student.save
-        found = Student.find(@student.id)
-        found.name.should eq(@student.name)
-        # mega extra credit: can you make this work
-        # and preserve the id-related tests from
-        # student_spec.rb?
-      end
     end
 
     #bonus 2: use before(:each) and after(:each) to create your database
@@ -78,10 +67,6 @@ end
 describe "Student" do
 
   before(:each) do
-    # @db = DBBuddy.create
-  end
-
-  after(:each) do
     Student.reset_all
   end
 
@@ -92,17 +77,38 @@ describe "Student" do
   describe "student properties" do
     let(:student) { Student.new }
 
-    it 'has properties based on an attributes hash' do
-      Student.attributes_for_db.each do |attribute|
-        student.email = "Test String email"
-        student.send("#{attribute}=", "Testing #{attribute}")
+    context 'creating a new student' do
+      it 'has properties based on an attributes hash' do
+        Student.attributes_for_db.each do |attribute|
+          student.send("#{attribute}=", "Testing #{attribute}")
+        end
+        student.save
+
+        test_student = Student.find(student.id)
+
+        Student.attributes_for_db.each do |attribute|
+          test_student.send(attribute).should eq("Testing #{attribute}")
+        end
       end
-      student.save
+    end
 
-      test_student = Student.find(student.id)
+    context 'update a student' do
+      it 'has properties based on an attributes hash' do
+        Student.attributes_for_db.each do |attribute|
+          student.send("#{attribute}=", "Original #{attribute}")
+        end
+        student.save
 
-      Student.attributes_for_db.each do |attribute|
-        test_student.send(attribute).should eq("Testing #{attribute}")
+        Student.attributes_for_db.each do |attribute|
+          student.send("#{attribute}=", "Updated #{attribute}")
+        end
+        student.save
+
+        test_student = Student.find(student.id)
+
+        Student.attributes_for_db.each do |attribute|
+          test_student.send(attribute).should eq("Updated #{attribute}")
+        end
       end
     end
   end
@@ -137,23 +143,6 @@ describe "Student" do
 
   end
 
-  describe "::find_by_name" do
-
-    let(:scott) { Student.new }
-    let(:avi) { Student.new }
-
-    it "can find a student by name" do
-      scott.name = "Scott"
-      avi.name = "Avi"
-      scott.save
-      avi.save
-
-      Student.find_by_name("Scott").first.name.should eq("Scott")
-      Student.find_by_name("Avi").first.should eq(avi)
-    end
-
-  end
-
   #BONUS ROUND! Implement an ID system
   context "with an ID" do
 
@@ -182,16 +171,6 @@ describe "Student" do
       s2.id.should eq(2)
     end
 
-    it "can find a student by ID" do
-      student.name = "Steve"
-      student.save
-      10.times do
-        Student.new
-      end
-
-      Student.find(student.id).name.should eq("Steve")
-    end
-
     describe "::delete" do
 
       it "can be deleted" do
@@ -208,3 +187,30 @@ describe "Student" do
   end
 
 end
+
+describe "Student", "finders" do
+  let(:student){Student.new}
+  
+  before(:each) do
+    Student.reset_all
+  end
+
+  it 'has a finder for every attribute' do
+    Student.attributes.each do |attribute|
+      Student.should respond_to("find_by_#{attribute}")
+    end
+  end
+
+  it 'finds a student by every attribute' do
+    # create a student with every attribute value
+    Student.attributes_for_db.each do |attribute|
+      student.send("#{attribute}=", "Find #{attribute}")
+    end
+    student.save
+    
+    Student.attributes_for_db.each do |attribute|
+      Student.send("find_by_#{attribute}", "Find #{attribute}").first.should eq(student)
+    end
+  end
+end
+
