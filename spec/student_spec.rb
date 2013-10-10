@@ -1,6 +1,15 @@
 require_relative 'spec_helper'
+require 'sqlite3'
 
 describe "Student" do
+
+  before(:each) do
+    @db = DBBuddy.create
+  end
+
+  after(:each) do
+    DBBuddy.destroy(@db)
+  end
 
   it "can be instantiated" do
     Student.new.should be_an_instance_of(Student)
@@ -82,6 +91,7 @@ describe "Student" do
       Student.reset_all
     end
 
+
     it "has an ID" do
       student.should respond_to(:id)
     end
@@ -100,12 +110,12 @@ describe "Student" do
 
     it "can find a student by ID" do
       student.name = "Steve"
+      student.save
       10.times do
         Student.new
       end
 
       Student.find(student.id).name.should eq("Steve")
-      Student.find(student.id).should eq(student)
     end
 
     describe "::delete" do
