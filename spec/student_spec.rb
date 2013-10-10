@@ -1,14 +1,88 @@
 require_relative 'spec_helper'
 require 'sqlite3'
 
+describe Student do
+  context "database operations" do
+    before(:each) do
+      @student = Student.new.tap { |s| s.name = "Anything But Scott Oh Nevermind" }
+      # @db = DBBuddy.create
+    end
+
+    after(:each) do
+      Student.reset_all
+    end
+
+    #think about what you need to do to set up a database
+    #and what should have the responsibility for doing that for these tests
+
+    describe ".insert" do
+      it "persists the student to the database" do
+        @student.should respond_to(:insert)
+        @student.insert.should eq(true)
+      end
+    end
+
+    describe ".update" do
+      it "updates the student in the database" do
+        @student.insert
+        @student.name = "Catherine"
+        @student.update.should eq(true)
+      end
+    end
+
+    describe ".save" do
+      it "chooses the right thing on first save" do
+        @student.should_receive(:insert)
+        @student.save
+      end
+      it "chooses the right thing after saving" do
+        @student.save
+        @student.name = "Steven"
+        @student.should_receive(:update)
+        @student.save
+      end
+    end
+
+    #bonus 1:  prove it!
+    describe "::load" do
+      it "loads the student from the database" do
+        @student.save
+        loaded = Student.load(@student.id)
+        loaded.name.should eq(@student.name)
+        loaded.id.should eq(@student.id)
+        @student.name = "new name"
+        @student.save
+        updated = Student.load(@student.id)
+        updated.name.should eq(@student.name)
+      end
+
+      it "finds by id" do
+        @student.save
+        found = Student.find(@student.id)
+        found.name.should eq(@student.name)
+        # mega extra credit: can you make this work
+        # and preserve the id-related tests from
+        # student_spec.rb?
+      end
+    end
+
+    #bonus 2: use before(:each) and after(:each) to create your database
+    #and set it to a default state for each test
+
+    #bonus 3: extract the code you used in bonus 2 to a
+    #new class that the test can reference to create and destroy databases
+  end
+end
+
+
 describe "Student" do
 
   before(:each) do
-    @db = DBBuddy.create
+    # @db = DBBuddy.create
   end
 
   after(:each) do
-    DBBuddy.destroy(@db)
+    Student.reset_all
   end
 
   it "can be instantiated" do
@@ -18,23 +92,18 @@ describe "Student" do
   describe "student properties" do
     let(:student) { Student.new }
 
-    it "has a name" do
-      student.name = "Paul"
-      student.name.should eq("Paul")
-    end
+    it 'has properties based on an attributes hash' do
+      Student.attributes_for_db.each do |attribute|
+        student.email = "Test String email"
+        student.send("#{attribute}=", "Testing #{attribute}")
+      end
+      student.save
 
-    it "has social media links" do
-      student.twitter = "paulissupercool"
-      student.twitter.should eq("paulissupercool")
-      student.linkedin = "paulhateslinkedin"
-      student.linkedin.should eq("paulhateslinkedin")
-      student.facebook = "whoisthisguypaulanyway"
-      student.facebook.should eq("whoisthisguypaulanyway")
-    end
+      test_student = Student.find(student.id)
 
-    it "has a website" do
-      student.website = "http://websitesarecool.com"
-      student.website.should eq("http://websitesarecool.com")
+      Student.attributes_for_db.each do |attribute|
+        test_student.send(attribute).should eq("Testing #{attribute}")
+      end
     end
   end
 
@@ -46,6 +115,7 @@ describe "Student" do
       ('a'..'c').each do |l|
         s = Student.new
         s.name = l
+        s.save
       end
 
       Student.all.count.should eq(3)
@@ -75,6 +145,8 @@ describe "Student" do
     it "can find a student by name" do
       scott.name = "Scott"
       avi.name = "Avi"
+      scott.save
+      avi.save
 
       Student.find_by_name("Scott").first.name.should eq("Scott")
       Student.find_by_name("Avi").first.should eq(avi)
@@ -102,9 +174,11 @@ describe "Student" do
 
     it "auto-assigns an id" do
       student.name = "Becky"
+      student.save
       student.id.should eq(1)
 
       s2 = Student.new
+      s2.save
       s2.id.should eq(2)
     end
 
