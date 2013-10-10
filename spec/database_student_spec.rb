@@ -1,9 +1,15 @@
+require 'sqlite3'
 require_relative 'spec_helper'
 
 describe Student do
   context "database operations" do
     before(:each) do
       @student = Student.new.tap { |s| s.name = "Anything But Scott Oh Nevermind" }
+      @db = DBBuddy.create
+    end
+
+    after(:each) do
+      DBBuddy.destroy(@db)
     end
 
     #think about what you need to do to set up a database
