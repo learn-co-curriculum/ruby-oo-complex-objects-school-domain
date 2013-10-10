@@ -1,8 +1,8 @@
 require 'sqlite3'
-require 'pry'
 
 class Student
   ATTRIBUTES = {
+    :id => "INTEGER PRIMARY KEY AUTOINCREMENT",
     :name => "TEXT",
     :twitter => "TEXT",
     :facebook => "TEXT",
@@ -10,7 +10,8 @@ class Student
     :github => "TEXT",
     :email => "TEXT",
     :website => "TEXT",
-    :id => "INTEGER PRIMARY KEY AUTOINCREMENT"
+    :blog => "TEXT",
+    :picture => "TEXT"
   }
 
   
@@ -32,23 +33,24 @@ class Student
  
   @@db = SQLite3::Database.new('students.db')
 
+  self.attributes.each do |attribute_name|
+    define_singleton_method("find_by_#{attribute_name}") do |attr_value|
+      sql = "SELECT * FROM students WHERE #{attribute_name} = ?"
+      results = @@db.execute sql, attr_value
+      self.students_from_rows(results)
+    end
+  end 
 
   def self.table_name
     "#{self.to_s.downcase}s"
   end
 
+  def self.columns_for_create
+    self.attributes_hash.collect{|k,v| "#{k} #{v}"}.join(",")
+  end
+
   def self.create_table
-    sql = <<-SQL
-      CREATE TABLE IF NOT EXISTS #{self.table_name} (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        twitter TEXT,
-        linkedin TEXT,
-        facebook TEXT,
-        website TEXT
-      );
-      SQL
-    
+    sql = "CREATE TABLE IF NOT EXISTS #{self.table_name} (#{self.columns_for_create});"  
     @@db.execute(sql);
   end
   create_table
@@ -84,7 +86,7 @@ class Student
   end 
 
   def self.question_marks_for_insert
-    "(#{(["?"]*self.attributes_for_db.size).join(",")})"
+    "#{(["?"]*self.attributes_for_db.size).join(",")}"
   end
 
   def self.insert_sql
@@ -99,15 +101,27 @@ class Student
     end
   end
 
+  def attributes_for_insert
+    self.attributes[1..-1]
+  end
+
   def insert
-    @@db.execute(self.class.insert_sql, self.attributes)
+    @@db.execute(self.class.insert_sql, self.attributes_for_insert)
     get_id
     @saved = true
   end
- 
+
+  def self.sql_for_update
+    self.attributes_for_db.collect{|attribute| "#{attribute} = ?"}.join(",")
+  end
+
+  def attributes_for_update
+    [self.attributes_for_insert, self.id].flatten
+  end
+
   def update
-    cmd = "UPDATE #{self.class.table_name} set name = ? where id = ?"
-    @@db.execute(cmd, self.name, self.id)
+    cmd = "UPDATE #{self.class.table_name} SET #{self.class.sql_for_update} WHERE id = ?"
+    @@db.execute(cmd, self.attributes_for_update)
     @saved = true
   end
  
@@ -145,14 +159,8 @@ class Student
     end
   end
 
-  def self.find_by_name(name)
-    sql = "SELECT * FROM students WHERE name = ?"
-    results = @@db.execute sql, name
-    self.students_from_rows(results)
-  end
- 
   def self.find(id)
-    Student.load(id)
+    Student.find_by_id(id).first
   end
  
   def self.delete(id)
@@ -183,5 +191,3 @@ class Student
 
   end
 end
-
-binding.pry
