@@ -1,3 +1,8 @@
+---
+  tags: oop, tdd
+  languages: ruby
+---
+
 # Domain Model for a School
 
 Write a model that stores students along with the grade that they are in.
