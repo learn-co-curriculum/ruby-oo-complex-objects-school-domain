@@ -12,8 +12,8 @@ Want to get write the models below and get the test suite to pass.
 
 ### Part 1. 
 
-Write a model that stores students along with the grade that they are in so the 
-following code would work:
+Write a model in the `lib` directory that stores students along with their grade 
+so that the following code would run:
 
 ```ruby
 school = School.new("Bayside High School")
@@ -37,7 +37,8 @@ school.roster
 # => {9 => ["Zach Morris"]}
 ``` 
 
-You can, of course, add several students to the same grade, and students to different grades.
+You can, of course, add several students to the same grade, and students to 
+different grades.
 
 ```ruby
 school.add_student("AC Slater", 9)
