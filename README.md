@@ -5,8 +5,9 @@
 
 # Domain Model for a School
 
-In this assignment you'll be writing a simple app for a school. You're going to 
-Want to get write the models below and get the test suite to pass. 
+In this assignment you'll be writing a simple app for a school. 
+
+Create the app detailed below and get the tests passing. 
 
 ## Instructions
 
