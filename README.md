@@ -65,7 +65,6 @@ school.grade(9)
 ```ruby
 school.sort
 # => {9 => ["AC Slater", "Zach Morris"], 10 => ["Kelly Kapowski"], 11 => ["Screech"]}
-<<<<<<< HEAD
 ```
 Here's a test suite to help you validate.
 
@@ -130,6 +129,4 @@ describe School do
     end
   end
 end
-=======
->>>>>>> master
 ```
