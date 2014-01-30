@@ -1,4 +1,4 @@
-require 'rspec'
+require 'spec-helper'
 
 describe 'School' do
   before :each do
