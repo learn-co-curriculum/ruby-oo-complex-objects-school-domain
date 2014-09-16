@@ -1,6 +1,7 @@
 ---
   tags: oop, tdd
   languages: ruby
+  resources: 1
 ---
 
 # Domain Model for a School
@@ -68,3 +69,5 @@ school.grade(9)
 school.sort
 # => {9 => ["AC Slater", "Zach Morris"], 10 => ["Kelly Kapowski"], 11 => ["Screech"]}
 ```
+## Resources
+* [StackOverflow](http://stackoverflow.com/) - [What does ||= (or equals) mean in Ruby?](http://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby)
