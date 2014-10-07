@@ -16,9 +16,9 @@ class School
   end
 
   def sort
-    sorted = Hash[roster.sort_by {|k,v| k }]
-    sorted.keys.each do |k,v|
-      sorted[k].sort!
+    sorted = {}
+    roster.each do |grade, students|
+      sorted[grade] = students.sort
     end
     sorted
   end
