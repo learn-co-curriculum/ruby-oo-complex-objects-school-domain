@@ -61,13 +61,12 @@ school.grade(9)
 
 ### Part 5.
  
- You should be able to get a sorted list of all the students. Grades are sorted 
- in descending order numerically, and the students within them are sorted in 
- ascending order alphabetically.
+You should be able to get a sorted list of all the students where the strings in the student arrays are sorted alphabetically. For instance:
 
 ```ruby
 school.sort
-# => {9 => ["AC Slater", "Zach Morris"], 10 => ["Kelly Kapowski"], 11 => ["Screech"]}
+# => {9 => ["AC Slater", "Zach Morris"], 10 => ["Aardvark", "Kelly Kapowski"], 11 => ["Screech", "Xavier"]}
 ```
+
 ## Resources
 * [StackOverflow](http://stackoverflow.com/) - [What does ||= (or equals) mean in Ruby?](http://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby)
