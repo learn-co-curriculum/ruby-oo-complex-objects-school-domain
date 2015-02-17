@@ -68,5 +68,7 @@ school.sort
 # => {9 => ["AC Slater", "Zach Morris"], 10 => ["Aardvark", "Kelly Kapowski"], 11 => ["Screech", "Xavier"]}
 ```
 
+Note that since hashes are unordered by nature, the order of the keys does not matter here, just the order of the student's names within each array.
+
 ## Resources
 * [StackOverflow](http://stackoverflow.com/) - [What does ||= (or equals) mean in Ruby?](http://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby)

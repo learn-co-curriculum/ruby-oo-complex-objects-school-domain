@@ -54,6 +54,7 @@ describe 'School' do
       @school.add_student("Blake Johnson", 7)
       @school.add_student("Jack Bauer", 7)
 
+      # key order does not matter 
       expect(@school.sort).to eq({7 => ["Blake Johnson", "Jack Bauer"], 9 => ["Bart Simpson", "Homer Simpson"], 10 => ["Avi Flombaum", "Jeff Baird"]})
     end
   end
