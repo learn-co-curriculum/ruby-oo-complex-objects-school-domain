@@ -1,8 +1,4 @@
----
-  tags: oop, tdd
-  languages: ruby
-  resources: 1
----
+
 
 # Domain Model for a School
 
