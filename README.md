@@ -1,25 +1,34 @@
-
-
 # Domain Model for a School
 
-In this assignment you'll be writing a simple app for a school. 
+## Objectives
 
-Create the app detailed below and get the tests passing. 
+1. Define the concept of a domain model. 
+2. Create your own domain model. 
+3. Write instance methods that manipulate nested data structures. 
 
+## What is a Domain Model?
+
+A domain model is a representation of real-world concepts in software. The concept of domain modeling is key in object orientation. In object orientation, we think of our classes as templates for objects. The instances of our classes are thought of as objects. For example, a Person class produces people objects that have attributes and behaviors, as described and enacted by instance methods. 
+
+Let's think of an example on a slightly larger scale. Let's say we are writing an application that will be used by a major automobile manufacturer to help manage their plants. In this case, we need a program that represents not just individual cars, but the entire car factory. In this (simplified) example, you could write a `AutoPlant` class that produces individual cars and has instance and class methods that handle things like `take_inventory` or `paint_cars`. Such a program not only represents a single object or concept but an entire environment––that of the auto factory. Consequently, this program could be understood as a domain model. It takes the world of the auto factory, and maps the constituents of that world into your program. 
+
+As we begin to write more and more advanced programs, you'll see that to really accurately model a domain, we'll need to build a program that contains more than one class. For now, howevever, we'll keep it simple
+
+In this assignment you'll be writing a simple domain model that represents a school. 
 ## Instructions
+
+This lab is primarily test-driven. Use the test output, along with the guidelines below. 
 
 ### Part 1. 
 
-Write a model in the `lib` directory that stores students along with their grade 
-so that the following code would run:
-
+create a class, School, in the `lib` directory that can be initialized with a name. The School class would be referred to as a "model" in the domain model context. 
 ```ruby
 school = School.new("Bayside High School")
 ```
 
 ### Part 2. 
 
-If no students have been added, the roster should be empty:
+A school should have a roster. The roster should be an empty hash upon initialization but will be built out to contain keys of grade levels. The value of each key will be an array of student names. 
 
 ```ruby
 school.roster
@@ -27,7 +36,7 @@ school.roster
 ```
 ### Part 3.
 
-When you add a student, they get added to the correct grade.
+You should be able to add a student to the school by calling the `add_student` method and giving it an argument of the student's name and their grade.
 
 ```ruby
 school.add_student("Zach Morris", 9)
@@ -35,8 +44,34 @@ school.roster
 # => {9 => ["Zach Morris"]}
 ``` 
 
-You can, of course, add several students to the same grade, and students to 
-different grades.
+**Hint:** If the roster hash starts off as being empty, how will you add key/value pairs to it, where the value is an array? Let's take a look at an example: 
+
+```ruby
+hash = {}
+```
+
+We start off with an empty hash above. Our desired result is a hash with a key that points to a value of an array. That array should contain a series of items. What happens if we try to create the key/value pair we want *and* add an item to the value array, all at the same time?
+
+```ruby
+hash["new_key"] << "new_value_for_value_array"
+ => NoMethodError: undefined method `<<' for nil:NilClass
+```
+
+We get an error! We can't push an item into an array that is the value of a key that doesn't exit yet! So, we *first* need to create the new key and point it to an empty array. *Then* we can push the new value into that array. 
+
+```ruby
+hash[new_key] = []
+hash[new_key] << new_value_for_value_array
+
+hash
+ => {"new_key"=>["new_value_for_value_array"]} 
+```
+
+Ta-da! When we first create the key and point it to a value of an empty array, we are able to then successfully add items to that array. 
+
+**Hint:** Now that we've thought about how to build up our hash, let's talk about how to add successive students to each grade. Let's say that we're adding the student `"AC Slater"` to grade `9`. If the `roster` already has a key of grade `9`, we'll be able to push AC Slater into the array that the grade `9` key points to. Otherwise, we'll need to first create the key of grade `9` and point it to an empty array. However, if we're in the scenario in which the grade `9` key already exists, we will erase it's current contents by creating a key of `9` and setting it equal to an empty array! You'll need to understand this in order to get the tests passing. 
+
+Here's an example of the desired behavior:
 
 ```ruby
 school.add_student("AC Slater", 9)
@@ -48,7 +83,7 @@ school.roster
 
 ### Part 4. 
 
-Also, you can ask for all the students in a single grade:
+A method, `grade`, should take in an argument of a grade and return all of the students in that grade:
 
 ```ruby
 school.grade(9)
