@@ -12,7 +12,7 @@ A domain model is a representation of real-world concepts in software. The conce
 
 Let's think of an example on a slightly larger scale. Let's say we are writing an application that will be used by a major automobile manufacturer to help manage their plants. In this case, we need a program that represents not just individual cars, but the entire car factory. In this (simplified) example, you could write a `AutoPlant` class that produces individual cars and has instance and class methods that handle things like `take_inventory` or `paint_cars`. Such a program not only represents a single object or concept but an entire environment––that of the auto factory. Consequently, this program could be understood as a domain model. It takes the world of the auto factory, and maps the constituents of that world into your program. 
 
-As we begin to write more and more advanced programs, you'll see that to really accurately model a domain, we'll need to build a program that contains more than one class. For now, howevever, we'll keep it simple
+As we begin to write more and more advanced programs, you'll see that to really accurately model a domain, we'll need to build a program that contains more than one class. For now, however, we'll keep it simple
 
 In this assignment you'll be writing a simple domain model that represents a school. 
 ## Instructions
