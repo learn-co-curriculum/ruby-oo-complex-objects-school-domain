@@ -21,7 +21,7 @@ This lab is primarily test-driven. Use the test output, along with the guideline
 
 ### Part 1. 
 
-create a class, School, in the `lib` directory that can be initialized with a name. The School class would be referred to as a "model" in the domain model context. 
+Create a class, School, in the `lib` directory that can be initialized with a name. The School class would be referred to as a "model" in the domain model context. 
 ```ruby
 school = School.new("Bayside High School")
 ```
