@@ -10,7 +10,7 @@
 
 A domain model is a representation of real-world concepts in software. The concept of domain modeling is key in object orientation. In object orientation, we think of our classes as templates for objects. The instances of our classes are thought of as objects. For example, a Person class produces people objects that have attributes and behaviors, as described and enacted by instance methods. 
 
-Let's think of an example on a slightly larger scale. Let's say we are writing an application that will be used by a major automobile manufacturer to help manage their plants. In this case, we need a program that represents not just individual cars, but the entire car factory. In this (simplified) example, you could write a `AutoPlant` class that produces individual cars and has instance and class methods that handle things like `take_inventory` or `paint_cars`. Such a program not only represents a single object or concept but an entire environment––that of the auto factory. Consequently, this program could be understood as a domain model. It takes the world of the auto factory, and maps the constituents of that world into your program. 
+Let's think of an example on a slightly larger scale. Let's say we are writing an application that will be used by a major automobile manufacturer to help manage their plants. In this case, we need a program that represents not just individual cars, but the entire car factory. In this (simplified) example, you could write an `AutoPlant` class that produces individual cars and has instance and class methods that handle things like `take_inventory` or `paint_cars`. Such a program not only represents a single object or concept but an entire environment––that of the auto factory. Consequently, this program could be understood as a domain model. It takes the world of the auto factory, and maps the constituents of that world into your program. 
 
 As we begin to write more and more advanced programs, you'll see that to really accurately model a domain, we'll need to build a program that contains more than one class. For now, however, we'll keep it simple.
 
@@ -69,7 +69,7 @@ hash
 
 Ta-da! When we first create the key and point it to a value of an empty array, we are able to then successfully add items to that array. 
 
-**Hint:** Now that we've thought about how to build up our hash, let's talk about how to add successive students to each grade. Let's say that we're adding the student `"AC Slater"` to grade `9`. If the `roster` already has a key of grade `9`, we'll be able to push AC Slater into the array that the grade `9` key points to. Otherwise, we'll need to first create the key of grade `9` and point it to an empty array. However, if we're in the scenario in which the grade `9` key already exists, we will erase it's current contents by creating a key of `9` and setting it equal to an empty array! You'll need to understand this in order to get the tests passing. 
+**Hint:** Now that we've thought about how to build up our hash, let's talk about how to add successive students to each grade. Let's say that we're adding the student `"AC Slater"` to grade `9`. If the `roster` already has a key of grade `9`, we'll be able to push AC Slater into the array that the grade `9` key points to. Otherwise, we'll need to first create the key of grade `9` and point it to an empty array. However, if we're in the scenario in which the grade `9` key already exists, we will erase its current contents by creating a key of `9` and setting it equal to an empty array! You'll need to understand this in order to get the tests passing. 
 
 Here's an example of the desired behavior:
 
@@ -105,3 +105,5 @@ Note that since hashes are unordered by nature, the order of the keys does not m
 * [StackOverflow](http://stackoverflow.com/) - [What does ||= (or equals) mean in Ruby?](http://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby)
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/school-domain' title='Domain Model for a School'>Domain Model for a School</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/school-domain'>OO School Domain</a> on Learn.co and start learning to code for free.</p>
