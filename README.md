@@ -61,7 +61,7 @@ We get an error! We can't push an item into an array that is the value of a key 
 
 ```ruby
 hash["new_key"] = []
-hash["new_key"] << new_value_for_value_array
+hash["new_key"] << "new_value_for_value_array"
 
 hash
  => {"new_key"=>["new_value_for_value_array"]} 
