@@ -60,8 +60,8 @@ hash["new_key"] << "new_value_for_value_array"
 We get an error! We can't push an item into an array that is the value of a key that doesn't exist yet! So, we *first* need to create the new key and point it to an empty array. *Then* we can push the new value into that array. 
 
 ```ruby
-hash[new_key] = []
-hash[new_key] << new_value_for_value_array
+hash["new_key"] = []
+hash["new_key"] << new_value_for_value_array
 
 hash
  => {"new_key"=>["new_value_for_value_array"]} 
