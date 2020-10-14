@@ -103,7 +103,3 @@ Note that since hashes are unordered by nature, the order of the keys does not m
 
 ## Resources
 * [StackOverflow](http://stackoverflow.com/) - [What does ||= (or equals) mean in Ruby?](http://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby)
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/school-domain' title='Domain Model for a School'>Domain Model for a School</a> on Learn.co and start learning to code for free.</p>
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/school-domain'>OO School Domain</a> on Learn.co and start learning to code for free.</p>
